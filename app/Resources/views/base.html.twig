@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />    
+        <meta charset="UTF-8" />
+        <title>{{ pageTitle }}</title>
+         <!-- 最新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="{{asset('bundles/css/jquery-ui-1.7.3.custom.css')}}" />
+<link rel="stylesheet" type="text/css" media="screen" href="{{asset('bundles/css/ui.jqgrid.css')}}" />
+<script type="text/javascript" src="{{asset('bundles/js/i18n/grid.locale-cn.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/js/jquery.jqGrid.min.js')}}"></script>
+   <link href="{{ asset('bundles/css/admin.css')}}" rel="stylesheet" type="text/css" />
+        {% block stylesheets %}{% endblock %}
+        {% block js %} {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

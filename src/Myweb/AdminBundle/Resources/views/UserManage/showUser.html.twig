@@ -1,0 +1,39 @@
+{% extends "MywebAdminBundle:Layout:dashbord.html.twig"%}
+{% set pageTitle= '用户管理'%}
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+   
+            });
+</script>
+{% endblock %}
+{% block main %}
+<table id="list"><tr><td/></tr></table>
+<div id="pager"></div>
+<div class="list">
+    <table class="table table-bordered table-hover">
+        <tr class="active"><td>用户名</td><td>邮箱</td><td>状态</td><td>上次登录时间</td>
+            <td>所属组</td><td>权限</td><td>操作</td></tr>
+    {% for user in userList %}
+        <tr><td>{{ user.username }}</td><td>{{ user.email }}</td>
+            <td>{{user.enabled}}</td><td>{{user.last_login}}</td>
+            <td>{% for group in user.groups %}
+                <input type="checkbox" name="group" checked="true" value="{{group}}"> {{group}}
+                {% endfor %}
+                {% for groupRest in user.groupRest %}
+                <input type="checkbox" name="group"  value="{{groupRest}}"> {{groupRest}}
+                {% endfor %}
+            </td>
+            <td>{% for permission in user.permission %}
+                <input type="checkbox" name="permission" checked="true" value="{{permission}}"> {{permission}}
+                {% endfor %}
+                {% for permissionRest in user.permissionRest %}
+                <input type="checkbox" name="permission"  value="{{permissionRest}}"> {{permissionRest}}
+                {% endfor %}
+            </td>
+            <td><a href="{{path('myweb_admin_editUser',{'userid':user.user_id,'name':user.username,'email':user.email,
+'enabled':user.enabled,'group':user.groups,'groupRest':user.groupRest})}}">编辑</a>|<a href="{{path('myweb_admin_delUser',{'userid':user.user_id})}}">删除</a></td></tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

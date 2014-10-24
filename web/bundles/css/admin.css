@@ -1,0 +1,14 @@
+/*
+admin base css
+*/
+/* 
+    Created on : 2013-12-26, 15:54:19
+    Author     : 麦田麦穗
+*/
+.main_form{
+    width: 500px;
+}
+form[role="form"] textarea{
+    width: 100%;
+}
+

@@ -1,0 +1,5 @@
+{% extends "MywebAdminBundle:Layout:dashbord.html.twig"%}
+{% set pageTitle = '会员注册'%}
+{% block fos_user_content %}
+{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}

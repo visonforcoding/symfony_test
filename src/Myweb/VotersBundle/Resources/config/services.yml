@@ -1,0 +1,26 @@
+parameters:
+#    myweb_voters.example.class: Myweb\VotersBundle\Example
+
+services:
+#    myweb_voters.example:
+#        class: %myweb_voters.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+parameters:
+    yamei_voter.class: Myweb\VotersBundle\Security\Authorization\Voter\TestVoter
+    yamei_manageVoter.class: Myweb\VotersBundle\Controller\ManageVotersController
+
+services:
+    permission_voter:
+        class: %yamei_voter.class%
+        arguments: 
+               entityManager: "@doctrine.orm.entity_manager"
+        public: false
+        tags:
+          - { name: security.voter }
+    yamei_voters:
+         class: %yamei_manageVoter.class%
+         calls:
+               - [setContainer, [@service_container]]
+
+       

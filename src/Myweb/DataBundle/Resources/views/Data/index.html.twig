@@ -1,0 +1,48 @@
+{% set pageTitle = "数据查询" %}
+{% extends 'MywebDataBundle:Layout:base.html.twig' %}
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+    $("#list").jqGrid({
+    // datatype: 'xmlhttp://localhost/jqgrid/jqgrid.php?page=1&rows=10&sidx=1&sord=ASC',
+           url: "{{path('myweb_data_getTempList')}}",
+            datatype:'json',
+            mtype: 'POST',
+            colNames:['Inv No', 'Date', 'Amount', 'Tax', 'Total', 'Notes'],
+            colModel :[
+            {name:'name', width:55},
+            {name:'pwd', width:90},
+            {name:'cttime', width:80, align:'right'},
+            {name:'email', width:80, align:'right'},
+            {name:'birthday', width:80, align:'right'},
+            {name:'hobby', width:150, sortable:false}
+            ],
+        pager: "#pager",
+        rownumbers:true,
+        rowNum:1000000,
+        rowList: [10, 20, 30],
+        sortname: "id",
+        sortorder: "desc",
+        viewrecords: true,
+        gridview: true,
+        autoencode: true,
+        caption: "request data",
+        height:"auto",
+        autowidth:true,
+        jsonReader: {
+                        root: "rows",
+                        page: "page",
+                        total: "total",
+                        records: "records",
+                        repeatitems: false,
+                        id: "0"
+                    }
+
+    });
+            });
+</script>
+{% endblock %}
+{% block main %}
+<table id="list"><tr><td/></tr></table>
+<div id="pager"></div>
+{% endblock %}

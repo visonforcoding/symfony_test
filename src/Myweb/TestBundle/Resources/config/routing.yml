@@ -1,0 +1,10 @@
+myweb_test_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MywebTestBundle:Default:index }
+one:
+    pattern:  /one
+    defaults: { _controller: MywebTestBundle:Default:one }
+two:
+    pattern:  /two
+    defaults: { _controller: MywebTestBundle:Index:two }
+

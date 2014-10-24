@@ -1,0 +1,9 @@
+parameters:
+#    yameijq_grid.example.class: Yamei\Bundle\jqGridBundle\Example
+
+services:
+    yamei_jqgrid:
+        class: Yamei\jqGridBundle\Controller\jqGridController
+        calls:
+        - [setContainer, [@service_container]]
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,4 @@
+myweb_blog_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MywebBlogBundle:Default:index }
+

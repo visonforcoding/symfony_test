@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{pageTitle}}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">   
+<link rel="stylesheet" type="text/css" media="screen" href="{{asset('bundles/css/jquery-ui-1.7.3.custom.css')}}" />
+<link rel="stylesheet" type="text/css" media="screen" href="{{asset('bundles/css/ui.jqgrid.css')}}" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="{{asset('bundles/js/i18n/grid.locale-cn.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/js/jquery.jqGrid.min.js')}}"></script>
+ {% block js %}{% endblock %}
+    </head>
+    <body>
+        <div id="main">
+            {% block main %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
+

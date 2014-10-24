@@ -1,0 +1,41 @@
+{% extends "MywebAdminBundle:Layout:dashbord.html.twig"%}
+{% set pageTitle= '用户组管理'%}
+{% block js %}
+<script type="text/javascript">
+    $(function() {
+
+    });
+</script>
+{% endblock %}
+{% block main %}
+<div class="list">
+    <table class="table table-bordered table-hover">
+        <tr class="active"><td>组名</td><td>操作</td></tr>
+    {% for group in groupList %}
+        <tr><td>{{ group.name }}</td>
+           <td><a href="
+{{path('myweb_admin_delGroup',{'group':group.id})}}">删除</a></td></tr>
+    {% endfor %}
+    </table>
+</div>
+<div > 
+    <form class="form-inline" role="form">
+        <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        分配为：
+          <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+         <button type="submit" class="btn btn-default">确定</button>
+    </form>
+</div>
+{% endblock %}

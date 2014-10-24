@@ -1,0 +1,57 @@
+myweb_admin_homepage:
+    pattern:  /
+    defaults: { _controller: MywebAdminBundle:Index:index }
+myweb_admin_addComment:
+    pattern:  /addComment
+    defaults: { _controller: MywebAdminBundle:Index:addComment }
+myweb_admin_editComment:
+    pattern:  /editComment
+    defaults: { _controller: MywebAdminBundle:Index:editComment }
+myweb_admin_addPermission:
+    pattern:  /userManage/addPermission
+    defaults: { _controller: MywebAdminBundle:UserManage:addPermission }
+myweb_admin_doAddPermission:
+    pattern:  /userManage/doAddPermission
+    defaults: { _controller: MywebAdminBundle:UserManage:doAddPermission }
+myweb_admin_showUser:
+    pattern:  /userManage/showUser
+    defaults: { _controller: MywebAdminBundle:UserManage:showUser }
+myweb_admin_getUserList:
+    pattern:  /userManage/getUserList
+    defaults: { _controller: MywebAdminBundle:UserManage:getUserList }
+myweb_admin_showGroup:
+    pattern:  /userManage/showGroup
+    defaults: { _controller: MywebAdminBundle:UserManage:showGroup }
+myweb_admin_getGroupList:
+    pattern:  /userManage/getGroupList
+    defaults: { _controller: MywebAdminBundle:UserManage:getGroupList }
+myweb_admin_addUser:
+    pattern:  /userManage/addUser
+    defaults: { _controller: MywebAdminBundle:UserManage:addUser }
+myweb_admin_doAddUser:
+    pattern:  /userManage/doAddUser
+    defaults: { _controller: MywebAdminBundle:UserManage:doAddUser }
+myweb_admin_addGroup:
+    pattern:  /userManage/addGroup
+    defaults: { _controller: MywebAdminBundle:UserManage:addGroup }
+myweb_admin_doAddGroup:
+    pattern:  /userManage/doAddGroup
+    defaults: { _controller: MywebAdminBundle:UserManage:doAddGroup }
+myweb_admin_manageGroup:
+    pattern:  /userManage/manageGroup
+    defaults: { _controller: MywebAdminBundle:UserManage:manageGroup }
+myweb_admin_delGroup:
+    pattern:  /userManage/delGroup
+    defaults: { _controller: MywebAdminBundle:UserManage:delGroup }
+myweb_admin_delGroupPer:
+    pattern:  /userManage/delGroupPer
+    defaults: { _controller: MywebAdminBundle:UserManage:delGroupPer }
+myweb_admin_delUser:
+    pattern:  /userManage/delUser
+    defaults: { _controller: MywebAdminBundle:UserManage:delUser }
+myweb_admin_editUser:
+    pattern:  /userManage/editUser
+    defaults: { _controller: MywebAdminBundle:UserManage:editUser }
+myweb_admin_doEditUser:
+    pattern:  /userManage/doEditUser
+    defaults: { _controller: MywebAdminBundle:UserManage:doEditUser }

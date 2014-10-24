@@ -1,0 +1,56 @@
+{% extends "MywebAdminBundle:Layout:dashbord.html.twig"%}
+{% set pageTitle= '用户管理'%}
+{% block js %}
+<script type="text/javascript">
+    $(function(){
+    $("#list").jqGrid({
+    // datatype: 'xmlhttp://localhost/jqgrid/jqgrid.php?page=1&rows=10&sidx=1&sord=ASC',
+           url: "{{path('myweb_admin_getUserList')}}",
+            datatype:'json',
+            mtype: 'POST',
+            colNames:['用户名', '邮箱', '上次登录时间', '状态'],
+            colModel :[
+            {name:'username', width:55,align:'center'},
+            {name:'email', width:90,align:'center'},
+            {name:'last_login', width:80, align:'center'},
+            {name:'enabled', width:80, align:'center'}
+            ],
+        pager: "#pager",
+        rownumbers:true,
+        rowNum:10,
+        rowList: [10, 20, 30],
+        sortname: "id",
+        sortorder: "desc",
+        viewrecords: true,
+        gridview: true,
+        autoencode: true,
+        caption: "用户管理",
+        height:"auto",
+        autowidth:true,
+        jsonReader: {
+                        root: "rows",
+                        page: "page",
+                        total: "total",
+                        records: "records",
+                        repeatitems: false,
+                        id: "0"
+                    }
+
+    });
+            });
+</script>
+{% endblock %}
+{% block main %}
+<table id="list"><tr><td/></tr></table>
+<div id="pager"></div>
+<div class="list">
+    <table class="table table-bordered table-hover">
+        <tr class="active"><td>组名</td><td>权限</td><td>描述</td><td>操作</td></tr>
+    {% for group in groupsList %}
+        <tr><td>{{ group.name }}</td><td>{{ group.permission }}</td>
+            <td>{{group.description}}</td><td><a href="
+{{path('myweb_admin_delGroupPer',{'group':group.groupId,'permission':group.permissionId})}}">删除</a></td></tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

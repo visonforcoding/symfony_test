@@ -1,0 +1,14 @@
+myweb_data_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MywebDataBundle:Default:index }
+myweb_data_homepage:
+    pattern:  /data
+    defaults: { _controller: MywebDataBundle:Data:index }
+myweb_data_getTempList:
+    pattern:  /getTempList
+    defaults: { _controller: MywebDataBundle:Data:getTempList }
+myweb_data_test:
+    pattern:  /test
+    defaults: { _controller: MywebDataBundle:Data:test }
+    
+

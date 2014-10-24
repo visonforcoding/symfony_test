@@ -1,0 +1,18 @@
+parameters:
+    myweb_user.user_create_listener: Myweb\UserBundle\EventListener\UserCreationListener
+    yamei_user.user_manage_controller: Myweb\UserBundle\Controller\UserController
+
+services:
+    myweb_user.user_creation:
+        class: %myweb_user.user_create_listener%
+        arguments: 
+               entityManager: "@doctrine.orm.entity_manager"
+               defaultGroup: "普通用户"
+        tags: 
+            - { name: kernel.event_subscriber}
+    yamei_user.user_manage:
+        class: %yamei_user.user_manage_controller%
+        calls:
+               - [setContainer, [@service_container]]
+
+

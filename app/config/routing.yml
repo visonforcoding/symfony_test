@@ -1,0 +1,23 @@
+myweb_voters:
+    resource: "@MywebVotersBundle/Resources/config/routing.yml"
+    prefix:   /
+
+myweb_data:
+    resource: "@MywebDataBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+myweb_user:
+    resource: "@MywebUserBundle/Resources/config/routing.yml"
+    prefix:   /admin
+myweb_blog:
+    resource: "@MywebBlogBundle/Resources/config/routing.yml"
+    prefix:   /
+
+myweb_test:
+    resource: "@MywebTestBundle/Resources/config/routing.yml"
+    prefix:   /
+   
+myweb_admin:
+    resource: "@MywebAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+

@@ -1,0 +1,30 @@
+{% extends "MywebAdminBundle:Layout:dashbord.html.twig"%}
+{% set pageTitle= '添加用户'%}
+{% block main %}
+<div class="main_form">
+    <form role="form" action="{{path('myweb_admin_doAddUser')}}" method="post">
+        <div class="form-group">
+            <label >username</label>
+            <input name="username"type="text" placeholder="username"/>
+        </div>
+        <div class="form-group">
+            <label>password</label>
+            <input type="password" name="password" placeholder="password"/>
+        </div>
+        <div class="form-group">
+            <label>email</label>
+            <input type="text" name="email" placeholder="email"/>
+        </div>
+                 {% for group in groupsList %}
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="groups[]" value="{{group.id}}"/> {{group.name}}
+                </label>
+            </div>   
+                 {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
+{% endblock %}
