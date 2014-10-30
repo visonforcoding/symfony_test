@@ -148,6 +148,11 @@ $catalogue = new MessageCatalogue('zh_CN', array (
     'form.new_password' => '新密码：',
     'form.new_password_confirmation' => '确认新密码：',
   ),
+  'messages' => 
+  array (
+    'Action.delSuccess' => '删除成功！',
+    'Action.delError' => '删除失败！',
+  ),
 ));
 
 $catalogueZh = new MessageCatalogue('zh', array (

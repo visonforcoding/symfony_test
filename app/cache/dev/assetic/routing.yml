@@ -2,4 +2,4 @@ _assetic:
     resource: .
     type: assetic
 _app:
-    resource: 'D:/xampp/htdocs/symfony/app/config/routing_dev.yml'
+    resource: 'E:/Dropbox/www/symfony/app/config/routing_dev.yml'
