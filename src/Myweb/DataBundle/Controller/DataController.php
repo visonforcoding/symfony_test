@@ -16,8 +16,9 @@ class DataController extends Controller {
      * @return type
      */
     public function indexAction() {
-        if ($this->get('security.context')->isGranted(array('add_temp'))) {
-            return $this->render('MywebDataBundle:Data:index.html.twig');
+        if ($this->get('security.context')->isGranted(array('闪烁'))) {
+            echo "你有权限！";
+            exit();
         } else {
             throw new \Symfony\Component\Security\Core\Exception\AccessDeniedException();
         }

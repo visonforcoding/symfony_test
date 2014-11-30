@@ -17,10 +17,6 @@ use Symfony\Component\Templating\Storage\StringStorage;
 use Symfony\Component\Templating\Helper\HelperInterface;
 use Symfony\Component\Templating\Loader\LoaderInterface;
 
-if (!defined('ENT_SUBSTITUTE')) {
-    define('ENT_SUBSTITUTE', 8);
-}
-
 /**
  * PhpEngine is an engine able to render PHP templates.
  *
@@ -32,6 +28,9 @@ class PhpEngine implements EngineInterface, \ArrayAccess
 {
     protected $loader;
     protected $current;
+    /**
+     * @var HelperInterface[]
+     */
     protected $helpers;
     protected $parents;
     protected $stack;
@@ -51,12 +50,12 @@ class PhpEngine implements EngineInterface, \ArrayAccess
      */
     public function __construct(TemplateNameParserInterface $parser, LoaderInterface $loader, array $helpers = array())
     {
-        $this->parser  = $parser;
-        $this->loader  = $loader;
+        $this->parser = $parser;
+        $this->loader = $loader;
         $this->parents = array();
-        $this->stack   = array();
+        $this->stack = array();
         $this->charset = 'UTF-8';
-        $this->cache   = array();
+        $this->cache = array();
         $this->globals = array();
 
         $this->setHelpers($helpers);
@@ -113,7 +112,7 @@ class PhpEngine implements EngineInterface, \ArrayAccess
      *
      * @param mixed $name A template name or a TemplateReferenceInterface instance
      *
-     * @return Boolean true if the template exists, false otherwise
+     * @return bool    true if the template exists, false otherwise
      *
      * @api
      */
@@ -133,7 +132,7 @@ class PhpEngine implements EngineInterface, \ArrayAccess
      *
      * @param mixed $name A template name or a TemplateReferenceInterface instance
      *
-     * @return Boolean true if this class supports the given resource, false otherwise
+     * @return bool    true if this class supports the given resource, false otherwise
      *
      * @api
      */
@@ -202,7 +201,7 @@ class PhpEngine implements EngineInterface, \ArrayAccess
      *
      * @param string $name The helper name
      *
-     * @return Boolean true if the helper is defined, false otherwise
+     * @return bool    true if the helper is defined, false otherwise
      *
      * @api
      */
@@ -288,7 +287,7 @@ class PhpEngine implements EngineInterface, \ArrayAccess
      *
      * @param string $name The helper name
      *
-     * @return Boolean true if the helper is defined, false otherwise
+     * @return bool    true if the helper is defined, false otherwise
      *
      * @api
      */
@@ -368,6 +367,10 @@ class PhpEngine implements EngineInterface, \ArrayAccess
     public function setCharset($charset)
     {
         $this->charset = $charset;
+
+        foreach ($this->helpers as $helper) {
+            $helper->setCharset($this->charset);
+        }
     }
 
     /**
@@ -459,6 +462,11 @@ class PhpEngine implements EngineInterface, \ArrayAccess
     protected function initializeEscapers()
     {
         $that = $this;
+        if (PHP_VERSION_ID >= 50400) {
+            $flags = ENT_QUOTES | ENT_SUBSTITUTE;
+        } else {
+            $flags = ENT_QUOTES;
+        }
 
         $this->escapers = array(
             'html' =>
@@ -469,10 +477,10 @@ class PhpEngine implements EngineInterface, \ArrayAccess
                  *
                  * @return string the escaped value
                  */
-                function ($value) use ($that) {
+                function ($value) use ($that, $flags) {
                     // Numbers and Boolean values get turned into strings which can cause problems
                     // with type comparisons (e.g. === or is_int() etc).
-                    return is_string($value) ? htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, $that->getCharset(), false) : $value;
+                    return is_string($value) ? htmlspecialchars($value, $flags, $that->getCharset(), false) : $value;
                 },
 
             'js' =>

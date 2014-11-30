@@ -66,8 +66,8 @@ class FlattenException
         foreach (array_merge(array($this), $this->getAllPrevious()) as $exception) {
             $exceptions[] = array(
                 'message' => $exception->getMessage(),
-                'class'   => $exception->getClass(),
-                'trace'   => $exception->getTrace(),
+                'class' => $exception->getClass(),
+                'trace' => $exception->getTrace(),
             );
         }
 
@@ -208,14 +208,14 @@ class FlattenException
     {
         $this->trace = array();
         $this->trace[] = array(
-            'namespace'   => '',
+            'namespace' => '',
             'short_class' => '',
-            'class'       => '',
-            'type'        => '',
-            'function'    => '',
-            'file'        => $file,
-            'line'        => $line,
-            'args'        => array(),
+            'class' => '',
+            'type' => '',
+            'function' => '',
+            'file' => $file,
+            'line' => $line,
+            'args' => array(),
         );
         foreach ($trace as $entry) {
             $class = '';
@@ -227,14 +227,14 @@ class FlattenException
             }
 
             $this->trace[] = array(
-                'namespace'   => $namespace,
+                'namespace' => $namespace,
                 'short_class' => $class,
-                'class'       => isset($entry['class']) ? $entry['class'] : '',
-                'type'        => isset($entry['type']) ? $entry['type'] : '',
-                'function'    => isset($entry['function']) ? $entry['function'] : null,
-                'file'        => isset($entry['file']) ? $entry['file'] : null,
-                'line'        => isset($entry['line']) ? $entry['line'] : null,
-                'args'        => isset($entry['args']) ? $this->flattenArgs($entry['args']) : array(),
+                'class' => isset($entry['class']) ? $entry['class'] : '',
+                'type' => isset($entry['type']) ? $entry['type'] : '',
+                'function' => isset($entry['function']) ? $entry['function'] : null,
+                'file' => isset($entry['file']) ? $entry['file'] : null,
+                'line' => isset($entry['line']) ? $entry['line'] : null,
+                'args' => isset($entry['args']) ? $this->flattenArgs($entry['args']) : array(),
             );
         }
     }
@@ -249,7 +249,7 @@ class FlattenException
                 if ($level > 10) {
                     $result[$key] = array('array', '*DEEP NESTED ARRAY*');
                 } else {
-                    $result[$key] = array('array', $this->flattenArgs($value, ++$level));
+                    $result[$key] = array('array', $this->flattenArgs($value, $level + 1));
                 }
             } elseif (null === $value) {
                 $result[$key] = array('null', null);

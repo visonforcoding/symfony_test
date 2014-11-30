@@ -82,7 +82,7 @@ class FormBuilder extends FormConfigBuilder implements \IteratorAggregate, FormB
         // Add to "children" to maintain order
         $this->children[$child] = null;
         $this->unresolvedChildren[$child] = array(
-            'type'    => $type,
+            'type' => $type,
             'options' => $options,
         );
 
@@ -139,10 +139,7 @@ class FormBuilder extends FormConfigBuilder implements \IteratorAggregate, FormB
         }
 
         unset($this->unresolvedChildren[$name]);
-
-        if (array_key_exists($name, $this->children)) {
-            unset($this->children[$name]);
-        }
+        unset($this->children[$name]);
 
         return $this;
     }
@@ -198,6 +195,7 @@ class FormBuilder extends FormConfigBuilder implements \IteratorAggregate, FormB
      */
     public function getFormConfig()
     {
+        /** @var $config self */
         $config = parent::getFormConfig();
 
         $config->children = array();
@@ -241,7 +239,7 @@ class FormBuilder extends FormConfigBuilder implements \IteratorAggregate, FormB
             throw new BadMethodCallException('FormBuilder methods cannot be accessed anymore once the builder is turned into a FormConfigInterface instance.');
         }
 
-        return new \ArrayIterator($this->children);
+        return new \ArrayIterator($this->all());
     }
 
     /**

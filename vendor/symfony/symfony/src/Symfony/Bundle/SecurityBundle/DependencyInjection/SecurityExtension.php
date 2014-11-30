@@ -14,7 +14,6 @@ namespace Symfony\Bundle\SecurityBundle\DependencyInjection;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\UserProvider\UserProviderFactoryInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -136,8 +135,8 @@ class SecurityExtension extends Extension
             ->getDefinition('security.acl.dbal.schema_listener')
             ->addTag('doctrine.event_listener', array(
                 'connection' => $config['connection'],
-                'event'      => 'postGenerateSchema',
-                'lazy'       => true
+                'event' => 'postGenerateSchema',
+                'lazy' => true,
             ))
         ;
 
@@ -229,7 +228,7 @@ class SecurityExtension extends Extension
         $mapDef->replaceArgument(1, $map);
 
         // add authentication providers to authentication manager
-        $authenticationProviders = array_map(function($id) {
+        $authenticationProviders = array_map(function ($id) {
             return new Reference($id);
         }, array_values(array_unique($authenticationProviders)));
         $container
@@ -282,8 +281,8 @@ class SecurityExtension extends Extension
             $listener = $container->setDefinition($listenerId, new DefinitionDecorator('security.logout_listener'));
             $listener->replaceArgument(3, array(
                 'csrf_parameter' => $firewall['logout']['csrf_parameter'],
-                'intention'      => $firewall['logout']['intention'],
-                'logout_path'    => $firewall['logout']['path'],
+                'intention' => $firewall['logout']['intention'],
+                'logout_path' => $firewall['logout']['path'],
             ));
             $listeners[] = new Reference($listenerId);
 
@@ -334,23 +333,21 @@ class SecurityExtension extends Extension
             ;
         }
 
+        // Determine default entry point
+        $defaultEntryPoint = isset($firewall['entry_point']) ? $firewall['entry_point'] : null;
+
         // Authentication listeners
-        list($authListeners, $defaultEntryPoint) = $this->createAuthenticationListeners($container, $id, $firewall, $authenticationProviders, $defaultProvider);
+        list($authListeners, $defaultEntryPoint) = $this->createAuthenticationListeners($container, $id, $firewall, $authenticationProviders, $defaultProvider, $defaultEntryPoint);
 
         $listeners = array_merge($listeners, $authListeners);
-
-        // Access listener
-        $listeners[] = new Reference('security.access_listener');
 
         // Switch user listener
         if (isset($firewall['switch_user'])) {
             $listeners[] = new Reference($this->createSwitchUserListener($container, $id, $firewall['switch_user'], $defaultProvider));
         }
 
-        // Determine default entry point
-        if (isset($firewall['entry_point'])) {
-            $defaultEntryPoint = $firewall['entry_point'];
-        }
+        // Access listener
+        $listeners[] = new Reference('security.access_listener');
 
         // Exception listener
         $exceptionListener = new Reference($this->createExceptionListener($container, $firewall, $id, $defaultEntryPoint));
@@ -371,11 +368,10 @@ class SecurityExtension extends Extension
         return $this->contextListeners[$contextKey] = $listenerId;
     }
 
-    private function createAuthenticationListeners($container, $id, $firewall, &$authenticationProviders, $defaultProvider)
+    private function createAuthenticationListeners($container, $id, $firewall, &$authenticationProviders, $defaultProvider, $defaultEntryPoint)
     {
         $listeners = array();
         $hasListeners = false;
-        $defaultEntryPoint = null;
 
         foreach ($this->listenerPositions as $position) {
             foreach ($this->factories[$position] as $factory) {
@@ -453,7 +449,7 @@ class SecurityExtension extends Extension
         // pbkdf2 encoder
         if ('pbkdf2' === $config['algorithm']) {
             return array(
-                'class'     => new Parameter('security.encoder.pbkdf2.class'),
+                'class' => new Parameter('security.encoder.pbkdf2.class'),
                 'arguments' => array(
                     $config['hash_algorithm'],
                     $config['encode_as_base64'],
@@ -466,14 +462,14 @@ class SecurityExtension extends Extension
         // bcrypt encoder
         if ('bcrypt' === $config['algorithm']) {
             return array(
-                'class'     => new Parameter('security.encoder.bcrypt.class'),
+                'class' => new Parameter('security.encoder.bcrypt.class'),
                 'arguments' => array($config['cost']),
             );
         }
 
         // message digest encoder
         return array(
-            'class'     => new Parameter('security.encoder.digest.class'),
+            'class' => new Parameter('security.encoder.digest.class'),
             'arguments' => array(
                 $config['algorithm'],
                 $config['encode_as_base64'],

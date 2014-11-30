@@ -12,7 +12,7 @@
 namespace Symfony\Bundle\WebProfilerBundle\Controller;
 
 use Symfony\Component\HttpKernel\Profiler\Profiler;
-use Symfony\Component\HttpKernel\Debug\ExceptionHandler;
+use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,6 +40,8 @@ class ExceptionController
      * @param string $token The profiler token
      *
      * @return Response A Response instance
+     *
+     * @throws NotFoundHttpException
      */
     public function showAction($token)
     {
@@ -63,10 +65,10 @@ class ExceptionController
         return new Response($this->twig->render(
             $template,
             array(
-                'status_code'    => $code,
-                'status_text'    => Response::$statusTexts[$code],
-                'exception'      => $exception,
-                'logger'         => null,
+                'status_code' => $code,
+                'status_text' => Response::$statusTexts[$code],
+                'exception' => $exception,
+                'logger' => null,
                 'currentContent' => '',
             )
         ), 200, array('Content-Type' => 'text/html'));
@@ -78,6 +80,8 @@ class ExceptionController
      * @param string $token The profiler token
      *
      * @return Response A Response instance
+     *
+     * @throws NotFoundHttpException
      */
     public function cssAction($token)
     {

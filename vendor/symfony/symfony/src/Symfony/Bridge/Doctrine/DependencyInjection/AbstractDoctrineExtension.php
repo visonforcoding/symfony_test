@@ -52,7 +52,7 @@ abstract class AbstractDoctrineExtension extends Extension
             foreach (array_keys($container->getParameter('kernel.bundles')) as $bundle) {
                 if (!isset($objectManager['mappings'][$bundle])) {
                     $objectManager['mappings'][$bundle] = array(
-                        'mapping'   => true,
+                        'mapping' => true,
                         'is_bundle' => true,
                     );
                 }
@@ -65,8 +65,8 @@ abstract class AbstractDoctrineExtension extends Extension
             }
 
             $mappingConfig = array_replace(array(
-                'dir'    => false,
-                'type'   => false,
+                'dir' => false,
+                'type' => false,
                 'prefix' => false,
             ), (array) $mappingConfig);
 
@@ -207,11 +207,11 @@ abstract class AbstractDoctrineExtension extends Extension
             } elseif ($driverType == 'annotation') {
                 $mappingDriverDef = new Definition('%'.$this->getObjectManagerElementName('metadata.'.$driverType.'.class%'), array(
                     new Reference($this->getObjectManagerElementName('metadata.annotation_reader')),
-                    array_values($driverPaths)
+                    array_values($driverPaths),
                 ));
             } else {
                 $mappingDriverDef = new Definition('%'.$this->getObjectManagerElementName('metadata.'.$driverType.'.class%'), array(
-                    array_values($driverPaths)
+                    array_values($driverPaths),
                 ));
             }
             $mappingDriverDef->setPublic(false);
@@ -291,8 +291,6 @@ abstract class AbstractDoctrineExtension extends Extension
         if (is_dir($dir.'/'.$this->getMappingObjectDefaultName())) {
             return 'annotation';
         }
-
-        return null;
     }
 
     /**
@@ -322,7 +320,7 @@ abstract class AbstractDoctrineExtension extends Extension
                 $cacheDef = new Definition($memcacheClass);
                 $memcacheInstance = new Definition($memcacheInstanceClass);
                 $memcacheInstance->addMethodCall('connect', array(
-                    $memcacheHost, $memcachePort
+                    $memcacheHost, $memcachePort,
                 ));
                 $container->setDefinition($this->getObjectManagerElementName(sprintf('%s_memcache_instance', $objectManager['name'])), $memcacheInstance);
                 $cacheDef->addMethodCall('setMemcache', array(new Reference($this->getObjectManagerElementName(sprintf('%s_memcache_instance', $objectManager['name'])))));
@@ -335,7 +333,7 @@ abstract class AbstractDoctrineExtension extends Extension
                 $cacheDef = new Definition($memcachedClass);
                 $memcachedInstance = new Definition($memcachedInstanceClass);
                 $memcachedInstance->addMethodCall('addServer', array(
-                    $memcachedHost, $memcachedPort
+                    $memcachedHost, $memcachedPort,
                 ));
                 $container->setDefinition($this->getObjectManagerElementName(sprintf('%s_memcached_instance', $objectManager['name'])), $memcachedInstance);
                 $cacheDef->addMethodCall('setMemcached', array(new Reference($this->getObjectManagerElementName(sprintf('%s_memcached_instance', $objectManager['name'])))));
@@ -348,7 +346,7 @@ abstract class AbstractDoctrineExtension extends Extension
                 $cacheDef = new Definition($redisClass);
                 $redisInstance = new Definition($redisInstanceClass);
                 $redisInstance->addMethodCall('connect', array(
-                    $redisHost, $redisPort
+                    $redisHost, $redisPort,
                 ));
                 $container->setDefinition($this->getObjectManagerElementName(sprintf('%s_redis_instance', $objectManager['name'])), $redisInstance);
                 $cacheDef->addMethodCall('setRedis', array(new Reference($this->getObjectManagerElementName(sprintf('%s_redis_instance', $objectManager['name'])))));

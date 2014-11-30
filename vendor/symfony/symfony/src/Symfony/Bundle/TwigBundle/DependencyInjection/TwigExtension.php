@@ -41,8 +41,8 @@ class TwigExtension extends Extension
                 foreach ($config['globals'] as $name => $value) {
                     if (is_array($value) && isset($value['key'])) {
                         $config['globals'][$name] = array(
-                            'key'   => $name,
-                            'value' => $config['globals'][$name]
+                            'key' => $name,
+                            'value' => $config['globals'][$name],
                         );
                     }
                 }

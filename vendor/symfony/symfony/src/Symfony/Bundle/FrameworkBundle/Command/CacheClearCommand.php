@@ -54,8 +54,8 @@ EOF
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $realCacheDir = $this->getContainer()->getParameter('kernel.cache_dir');
-        $oldCacheDir  = $realCacheDir.'_old';
-        $filesystem   = $this->getContainer()->get('filesystem');
+        $oldCacheDir = $realCacheDir.'_old';
+        $filesystem = $this->getContainer()->get('filesystem');
 
         if (!is_writable($realCacheDir)) {
             throw new \RuntimeException(sprintf('Unable to write in the "%s" directory', $realCacheDir));
@@ -84,7 +84,7 @@ EOF
 
             $filesystem->rename($realCacheDir, $oldCacheDir);
             if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-                sleep(1);  // workaround for windows php rename bug
+                sleep(1);  // workaround for Windows PHP rename bug
             }
             $filesystem->rename($warmupDir, $realCacheDir);
         }
@@ -120,16 +120,19 @@ EOF
         $warmer->warmUp($warmupDir);
 
         // fix references to the Kernel in .meta files
+        $safeTempKernel = str_replace('\\', '\\\\', get_class($tempKernel));
+        $realKernelFQN = get_class($realKernel);
+
         foreach (Finder::create()->files()->name('*.meta')->in($warmupDir) as $file) {
             file_put_contents($file, preg_replace(
-                '/(C\:\d+\:)"'.get_class($tempKernel).'"/',
-                sprintf('$1"%s"', $realKernelClass),
+                '/(C\:\d+\:)"'.$safeTempKernel.'"/',
+                sprintf('$1"%s"', $realKernelFQN),
                 file_get_contents($file)
             ));
         }
 
         // fix references to cached files with the real cache directory name
-        $search  = array($warmupDir, str_replace('\\', '\\\\', $warmupDir));
+        $search = array($warmupDir, str_replace('\\', '\\\\', $warmupDir));
         $replace = str_replace('\\', '/', $realCacheDir);
         foreach (Finder::create()->files()->in($warmupDir) as $file) {
             $content = str_replace($search, $replace, file_get_contents($file));
@@ -137,7 +140,7 @@ EOF
         }
 
         // fix references to kernel/container related classes
-        $search  = $tempKernel->getName().ucfirst($tempKernel->getEnvironment());
+        $search = $tempKernel->getName().ucfirst($tempKernel->getEnvironment());
         $replace = $realKernel->getName().ucfirst($realKernel->getEnvironment());
         foreach (Finder::create()->files()->name($search.'*')->in($warmupDir) as $file) {
             $content = str_replace($search, $replace, file_get_contents($file));

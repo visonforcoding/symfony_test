@@ -11,6 +11,12 @@
 
 namespace Symfony\Component\ClassLoader;
 
+if (PHP_VERSION_ID >= 50400) {
+    define('SYMFONY_TRAIT', T_TRAIT);
+} else {
+    define('SYMFONY_TRAIT', 0);
+}
+
 /**
  * ClassMapGenerator
  *
@@ -67,7 +73,6 @@ class ClassMapGenerator
             foreach ($classes as $class) {
                 $map[$class] = $path;
             }
-
         }
 
         return $map;
@@ -83,8 +88,7 @@ class ClassMapGenerator
     private static function findClasses($path)
     {
         $contents = file_get_contents($path);
-        $tokens   = token_get_all($contents);
-        $T_TRAIT  = version_compare(PHP_VERSION, '5.4', '<') ? -1 : T_TRAIT;
+        $tokens = token_get_all($contents);
 
         $classes = array();
 
@@ -111,7 +115,7 @@ class ClassMapGenerator
                     break;
                 case T_CLASS:
                 case T_INTERFACE:
-                case $T_TRAIT:
+                case SYMFONY_TRAIT:
                     // Find the classname
                     while (($t = $tokens[++$i]) && is_array($t)) {
                         if (T_STRING === $t[0]) {

@@ -28,11 +28,11 @@ class WebProcessorTest extends \PHPUnit_Framework_TestCase
     public function testUsesRequestServerData()
     {
         $server = array(
-            'REQUEST_URI'    => 'A',
-            'REMOTE_ADDR'    => 'B',
+            'REQUEST_URI' => 'A',
+            'REMOTE_ADDR' => 'B',
             'REQUEST_METHOD' => 'C',
-            'SERVER_NAME'    => 'D',
-            'HTTP_REFERER'   => 'E'
+            'SERVER_NAME' => 'D',
+            'HTTP_REFERER' => 'E',
         );
 
         $request = new Request();
@@ -60,7 +60,7 @@ class WebProcessorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param integer $level
+     * @param int     $level
      * @param string  $message
      *
      * @return array Record

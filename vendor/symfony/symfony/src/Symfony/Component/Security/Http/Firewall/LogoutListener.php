@@ -20,7 +20,6 @@ use Symfony\Component\Security\Core\Exception\LogoutException;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 /**
  * LogoutListener logout users.
@@ -51,8 +50,8 @@ class LogoutListener implements ListenerInterface
         $this->httpUtils = $httpUtils;
         $this->options = array_merge(array(
             'csrf_parameter' => '_csrf_token',
-            'intention'      => 'logout',
-            'logout_path'    => '/logout',
+            'intention' => 'logout',
+            'logout_path' => '/logout',
         ), $options);
         $this->successHandler = $successHandler;
         $this->csrfProvider = $csrfProvider;
@@ -122,7 +121,7 @@ class LogoutListener implements ListenerInterface
      *
      * @param Request $request
      *
-     * @return Boolean
+     * @return bool
      */
     protected function requiresLogout(Request $request)
     {

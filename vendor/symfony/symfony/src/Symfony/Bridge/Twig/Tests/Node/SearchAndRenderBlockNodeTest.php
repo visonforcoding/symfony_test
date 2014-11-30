@@ -16,15 +16,6 @@ use Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode;
 
 class SearchAndRenderBlockNodeTest extends TestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (version_compare(\Twig_Environment::VERSION, '1.5.0', '<')) {
-            $this->markTestSkipped('Requires Twig version to be at least 1.5.0.');
-        }
-    }
-
     public function testCompileWidget()
     {
         $arguments = new \Twig_Node(array(
@@ -273,7 +264,7 @@ class SearchAndRenderBlockNodeTest extends TestCase
 
     protected function getVariableGetter($name)
     {
-        if (version_compare(phpversion(), '5.4.0RC1', '>=')) {
+        if (PHP_VERSION_ID >= 50400) {
             return sprintf('(isset($context["%s"]) ? $context["%s"] : null)', $name, $name);
         }
 

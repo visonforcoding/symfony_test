@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\HttpKernel\Tests;
+namespace Symfony\Component\HttpKernel\Tests\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 
@@ -28,7 +28,10 @@ class MergeExtensionConfigurationPassTest extends \PHPUnit_Framework_TestCase
 
     public function testAutoloadMainExtension()
     {
-        $container = $this->getMock('Symfony\\Component\\DependencyInjection\\ContainerBuilder');
+        $container = $this->getMock(
+            'Symfony\\Component\\DependencyInjection\\ContainerBuilder',
+            array('getExtensionConfig', 'loadFromExtension', 'getParameterBag')
+        );
         $params = $this->getMock('Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag');
 
         $container->expects($this->at(0))

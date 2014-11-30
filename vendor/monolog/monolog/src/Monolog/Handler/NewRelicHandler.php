@@ -21,11 +21,22 @@ use Monolog\Logger;
 class NewRelicHandler extends AbstractProcessingHandler
 {
     /**
-     * {@inheritDoc}
+     * Name of the New Relic application that will receive logs from this handler.
+     *
+     * @var string
      */
-    public function __construct($level = Logger::ERROR, $bubble = true)
+    protected $appName;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param string $appName
+     */
+    public function __construct($level = Logger::ERROR, $bubble = true, $appName = null)
     {
         parent::__construct($level, $bubble);
+
+        $this->appName = $appName;
     }
 
     /**
@@ -37,6 +48,10 @@ class NewRelicHandler extends AbstractProcessingHandler
             throw new MissingExtensionException('The newrelic PHP extension is required to use the NewRelicHandler');
         }
 
+        if ($appName = $this->getAppName($record['context'])) {
+            $this->setNewRelicAppName($appName);
+        }
+
         if (isset($record['context']['exception']) && $record['context']['exception'] instanceof \Exception) {
             newrelic_notice_error($record['message'], $record['context']['exception']);
             unset($record['context']['exception']);
@@ -45,7 +60,11 @@ class NewRelicHandler extends AbstractProcessingHandler
         }
 
         foreach ($record['context'] as $key => $parameter) {
-            newrelic_add_custom_parameter($key, $parameter);
+            newrelic_add_custom_parameter('context_' . $key, $parameter);
+        }
+
+        foreach ($record['extra'] as $key => $parameter) {
+            newrelic_add_custom_parameter('extra_' . $key, $parameter);
         }
     }
 
@@ -57,5 +76,31 @@ class NewRelicHandler extends AbstractProcessingHandler
     protected function isNewRelicEnabled()
     {
         return extension_loaded('newrelic');
+    }
+
+    /**
+     * Returns the appname where this log should be sent. Each log can override the default appname, set in this
+     * handler's constructor, by providing the appname in its context.
+     *
+     * @param  array       $context
+     * @return null|string
+     */
+    protected function getAppName(array $context)
+    {
+        if (isset($context['appname'])) {
+            return $context['appname'];
+        }
+
+        return $this->appName;
+    }
+
+    /**
+     * Sets the NewRelic application that should receive this log.
+     *
+     * @param string $appName
+     */
+    protected function setNewRelicAppName($appName)
+    {
+        newrelic_set_appname($appName);
     }
 }

@@ -114,14 +114,14 @@ class TwigExtensionTest extends TestCase
     public function testGlobalsWithDifferentTypesAndValues()
     {
         $globals = array(
-            'array'   => array(),
-            'false'   => false,
-            'float'   => 2.0,
+            'array' => array(),
+            'false' => false,
+            'float' => 2.0,
             'integer' => 3,
-            'null'    => null,
-            'object'  => new \stdClass(),
-            'string'  => 'foo',
-            'true'    => true,
+            'null' => null,
+            'object' => new \stdClass(),
+            'string' => 'foo',
+            'true' => true,
         );
 
         $container = $this->createContainer();
@@ -145,6 +145,7 @@ class TwigExtensionTest extends TestCase
         $container = $this->createContainer();
         $container->registerExtension(new TwigExtension());
         $this->loadFromFile($container, 'full', $format);
+        $this->loadFromFile($container, 'extra', $format);
         $this->compileContainer($container);
 
         $def = $container->getDefinition('twig.loader.filesystem');
@@ -160,8 +161,9 @@ class TwigExtensionTest extends TestCase
         $this->assertEquals(array(
             array('path1'),
             array('path2'),
-            array('namespaced_path1', 'namespace'),
-            array('namespaced_path2', 'namespace'),
+            array('namespaced_path1', 'namespace1'),
+            array('namespaced_path2', 'namespace2'),
+            array('namespaced_path3', 'namespace3'),
             array(__DIR__.'/Fixtures/Resources/TwigBundle/views', 'Twig'),
             array(realpath(__DIR__.'/../..').'/Resources/views', 'Twig'),
             array(__DIR__.'/Fixtures/Resources/views'),
@@ -181,10 +183,10 @@ class TwigExtensionTest extends TestCase
     {
         $container = new ContainerBuilder(new ParameterBag(array(
             'kernel.cache_dir' => __DIR__,
-            'kernel.root_dir'  => __DIR__.'/Fixtures',
-            'kernel.charset'   => 'UTF-8',
-            'kernel.debug'     => false,
-            'kernel.bundles'   => array('TwigBundle' => 'Symfony\\Bundle\\TwigBundle\\TwigBundle'),
+            'kernel.root_dir' => __DIR__.'/Fixtures',
+            'kernel.charset' => 'UTF-8',
+            'kernel.debug' => false,
+            'kernel.bundles' => array('TwigBundle' => 'Symfony\\Bundle\\TwigBundle\\TwigBundle'),
         )));
 
         return $container;

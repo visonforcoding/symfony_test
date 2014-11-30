@@ -28,16 +28,16 @@ class Locale
 
     /* Locale method constants */
     const ACTUAL_LOCALE = 0;
-    const VALID_LOCALE  = 1;
+    const VALID_LOCALE = 1;
 
     /* Language tags constants */
-    const LANG_TAG               = 'language';
-    const EXTLANG_TAG            = 'extlang';
-    const SCRIPT_TAG             = 'script';
-    const REGION_TAG             = 'region';
-    const VARIANT_TAG            = 'variant';
+    const LANG_TAG = 'language';
+    const EXTLANG_TAG = 'extlang';
+    const SCRIPT_TAG = 'script';
+    const REGION_TAG = 'region';
+    const VARIANT_TAG = 'variant';
     const GRANDFATHERED_LANG_TAG = 'grandfathered';
-    const PRIVATE_TAG            = 'private';
+    const PRIVATE_TAG = 'private';
 
     /**
      * Not supported. Returns the best available locale based on HTTP "Accept-Language" header according to RFC 2616
@@ -76,7 +76,7 @@ class Locale
      *
      * @param string  $langtag      The language tag to check
      * @param string  $locale       The language range to check against
-     * @param Boolean $canonicalize
+     * @param bool    $canonicalize
      *
      * @return string The corresponding locale code
      *
@@ -271,7 +271,7 @@ class Locale
      *
      * @param array   $langtag      A list of the language tags to compare to locale
      * @param string  $locale       The locale to use as the language range when matching
-     * @param Boolean $canonicalize If true, the arguments will be converted to canonical form before matching
+     * @param bool    $canonicalize If true, the arguments will be converted to canonical form before matching
      * @param string  $default      The locale to use if no match is found
      *
      * @see http://www.php.net/manual/en/locale.lookup.php
@@ -304,7 +304,7 @@ class Locale
      *
      * @param string $locale The locale code
      *
-     * @return Boolean true on success or false on failure
+     * @return bool    true on success or false on failure
      *
      * @see http://www.php.net/manual/en/locale.parselocale.php
      *
